@@ -154,6 +154,7 @@ mod imp {
             if is_maximized {
                 win.maximize();
             }
+            //@@@ call method action_detials and sending parameter win.dodel()
             self.account_details.set_providers_model(win.model());
 
             if config::PROFILE == "Devel" {
