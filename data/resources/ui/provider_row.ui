@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template parent="GtkListBoxRow" class="ProviderRow">
+    <property name="activatable">False</property>
+    <property name="valign">center</property>
+    <property name="selectable">False</property>
+    <property name="focusable">False</property>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="vexpand">True</property>
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="hexpand">True</property>
+            <property name="margin-bottom">6</property>
+            <property name="margin-start">6</property>
+            <property name="margin-end">6</property>
+            <child>
+              <object class="ProviderImage" id="image">
+                <property name="halign">start</property>
+                <property name="size">32</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="name_label">
+                <property name="halign">start</property>
+                <property name="margin-start">6</property>
+                <property name="margin-bottom">6</property>
+                <style>
+                  <class name="heading" />
+                </style>
+              </object>
+            </child>
+            <child>
+                <object class="ProgressIcon" id="progress_icon">
+                  <property name="halign">end</property>
+                  <property name="hexpand">True</property>
+                  <property name="width-request">12</property>
+                  <property name="height-request">12</property>
+                </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkListBox" id="accounts_list">
+            <property name="vexpand">True</property>
+            <style>
+              <class name="boxed-list" />
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+    <style>
+      <class name="provider-row"/>
+    </style>
+  </template>
+</interface>

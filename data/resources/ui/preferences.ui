@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkAdjustment" id="auto_lock_adjustment">
+    <property name="lower">1</property>
+    <property name="upper">60</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <template class="PreferencesWindow" parent="AdwPreferencesDialog">
+    <property name="content-width">550</property>
+    <property name="content-height">570</property>
+    <property name="search-enabled">True</property>
+    <child>
+      <object class="AdwPreferencesPage">
+        <property name="icon-name">applications-system-symbolic</property>
+        <property name="title" translatable="yes">General</property>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Privacy</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title" translatable="yes">_Passphrase</property>
+                <property name="use-underline">True</property>
+                <property name="subtitle" translatable="yes">Set up a passphrase to lock the application with</property>
+                <property name="activatable">True</property>
+                <property name="action-name">preferences.show_password_page</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="icon_name">go-next-symbolic</property>
+                    <property name="accessible-role">presentation</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSwitchRow" id="auto_lock_switch">
+                <property name="title" translatable="yes">_Auto Lock the Application</property>
+                <property name="use-underline">True</property>
+                <property name="subtitle" translatable="yes">Whether to automatically lock the application</property>
+                <property name="sensitive" bind-source="PreferencesWindow" bind-property="has-set-password" bind-flags="sync-create" />
+              </object>
+            </child>
+            <child>
+              <object class="AdwSpinRow" id="lock_timeout_spin_btn">
+                <property name="title" translatable="yes">Auto Lock _Timeout</property>
+                <property name="subtitle" translatable="yes">The time in minutes</property>
+                <property name="use-underline">True</property>
+                <property name="sensitive" bind-source="auto_lock_switch" bind-property="sensitive" bind-flags="sync-create" />
+                <property name="adjustment">auto_lock_adjustment</property>
+                <property name="climb-rate">1</property>
+                <property name="numeric">True</property>
+                <property name="update-policy">if-valid</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Network</property>
+            <child>
+              <object class="AdwSwitchRow" id="download_favicons_switch">
+                <property name="title" translatable="yes">_Download Favicons</property>
+                <property name="use-underline">True</property>
+                <property name="subtitle" translatable="yes">Automatically attempt fetching a website icon</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSwitchRow" id="download_favicons_metered_switch">
+                <property name="title" translatable="yes">_Metered Connection</property>
+                <property name="use-underline">True</property>
+                <property name="subtitle" translatable="yes">Fetch a website icon on a metered connection</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesPage">
+        <property name="icon-name">document-save-as-symbolic</property>
+        <property name="title" translatable="yes">Backup/Restore</property>
+        <child>
+          <object class="AdwPreferencesGroup" id="backup_group">
+            <property name="title" translatable="yes">Backup</property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup" id="restore_group">
+            <property name="title" translatable="yes">Restore</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="ErrorRevealer" parent="GtkWidget">
+    <child>
+      <object class="GtkRevealer" id="revealer">
+        <child>
+          <object class="GtkLabel" id="label">
+            <style>
+              <class name="error"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

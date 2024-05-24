@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkAdjustment" id="period_adjustment">
+    <property name="lower">1</property>
+    <property name="upper">90</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="default_counter_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">1000</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="digits_adjustment">
+    <property name="upper">10</property>
+    <property name="lower">1</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <template parent="AdwNavigationPage" class="ProviderPage">
+    <property name="title" translatable="yes">Provider</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <child type="end">
+              <object class="GtkButton" id="save_btn">
+                <property name="label" translatable="yes">_Save</property>
+                <property name="use-underline">True</property>
+                <property name="sensitive">False</property>
+                <property name="receives-default">True</property>
+                <property name="action-name">providers.save</property>
+                <style>
+                  <class name="suggested-action" />
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="hscrollbar-policy">never</property>
+            <child>
+              <object class="AdwClamp">
+                <property name="margin-top">36</property>
+                <property name="margin-bottom">12</property>
+                <property name="vexpand">True</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">18</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="ProviderImage" id="image">
+                            <property name="halign">center</property>
+                            <property name="size">96</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">horizontal</property>
+                            <property name="halign">center</property>
+                            <property name="spacing">12</property>
+                            <property name="margin-top">18</property>
+                            <property name="margin-bottom">18</property>
+                            <child>
+                              <object class="GtkButton">
+                                <property name="label" translatable="yes">_Reset</property>
+                                <property name="use-underline">True</property>
+                                <property name="action-name">providers.reset_image</property>
+                                <style>
+                                  <class name="pill" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton">
+                                <property name="label" translatable="yes">Select a _File</property>
+                                <property name="use-underline">True</property>
+                                <property name="action-name">providers.select_image</property>
+                                <style>
+                                  <class name="pill" />
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ErrorRevealer" id="error_revealer">
+                        <property name="margin-top">12</property>
+                        <property name="visible">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkListBox">
+                        <property name="selection-mode">none</property>
+                        <child>
+                          <object class="AdwEntryRow" id="name_entry">
+                            <property name="title" translatable="yes">Name</property>
+                            <signal name="changed" handler="entry_validate" swapped="true" />
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwEntryRow" id="provider_website_entry">
+                            <property name="title" translatable="yes">Website</property>
+                            <signal name="changed" handler="entry_validate" swapped="true" />
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwComboRow" id="method_comborow">
+                            <property name="title" translatable="yes">Computing Method</property>
+                            <signal name="notify::selected-item" handler="on_method_changed"
+                                    swapped="true" />
+                            <property name="model">
+                              <object class="AdwEnumListModel">
+                                <property name="enum-type">OTPMethod</property>
+                              </object>
+                            </property>
+                            <property name="expression">
+                              <closure type="gchararray" function="otp_method_to_locale_string"/>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwComboRow" id="algorithm_comborow">
+                            <property name="title" translatable="yes">Algorithm</property>
+                            <property name="model">
+                              <object class="AdwEnumListModel">
+                                <property name="enum-type">OTPAlgorithm</property>
+                              </object>
+                            </property>
+                            <property name="expression">
+                              <closure type="gchararray" function="algorithm_to_locale_string"/>
+                            </property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="boxed-list" />
+                        </style>
+                        <child>
+                          <object class="AdwSpinRow" id="period_spinbutton">
+                            <property name="title" translatable="yes">Period</property>
+                            <property name="subtitle" translatable="yes">Duration in seconds until the next password update</property>
+                            <property name="text">0</property>
+                            <property name="adjustment">period_adjustment</property>
+                            <property name="numeric">True</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwSpinRow" id="default_counter_spinbutton">
+                            <property name="title" translatable="yes">Counter</property>
+                            <property name="subtitle" translatable="yes">The by default value for counter-based computing method</property>
+                            <property name="text">0</property>
+                            <property name="adjustment">default_counter_adjustment</property>
+                            <property name="numeric">True</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwSpinRow" id="digits_spinbutton">
+                            <property name="title" translatable="yes">Digits</property>
+                            <property name="subtitle" translatable="yes">Length of the generated code</property>
+                            <property name="value">6</property>
+                            <property name="text">0</property>
+                            <property name="adjustment">digits_adjustment</property>
+                            <property name="numeric">True</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwEntryRow" id="provider_help_entry">
+                            <property name="title" translatable="yes">Help URL</property>
+                            <signal name="changed" handler="entry_validate" swapped="true" />
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="delete_button">
+                        <property name="label" translatable="yes">_Delete</property>
+                        <property name="use-underline">True</property>
+                        <property name="action-name">providers.delete</property>
+                        <property name="halign">center</property>
+                        <style>
+                          <class name="pill" />
+                          <class name="destructive-action" />
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class='GtkShortcutController'>
+        <property name='scope'>local</property>
+        <child>
+          <object class='GtkShortcut'>
+            <property name='trigger'>Escape</property>
+            <property name='action'>action(providers.back)</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

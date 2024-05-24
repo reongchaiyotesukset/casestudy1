@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="KeyringErrorDialog" parent="AdwApplicationWindow">
+    <property name="width-request">360</property>
+    <property name="height-request">294</property>
+    <property name="default-width">600</property>
+    <property name="default-height">600</property>
+    <property name="title" translatable="yes">Secret Service Error</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-title">False</property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwStatusPage" id="status_page">
+            <property name="title" bind-source="KeyringErrorDialog" bind-property="title" bind-flags="sync-create" />
+            <style>
+              <class name="icon-dropshadow" />
+            </style>
+            <child>
+              <object class="AdwClamp">
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">24</property>
+                    <property name="margin-start">6</property>
+                    <property name="margin-end">6</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="wrap">true</property>
+                        <property name="wrap-mode">word-char</property>
+                        <property name="xalign">0.0</property>
+                        <property name="label" translatable="yes">Authenticator relies on a Secret Service Provider to manage your sensitive session information and an error occurred while we were trying to store or get your session.</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">12</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="wrap">true</property>
+                            <property name="wrap-mode">word-char</property>
+                            <property name="xalign">0.0</property>
+                            <property name="label" translatable="yes">Here are a few things that might help you fix issues with the Secret Service:</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="spacing">6</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="valign">start</property>
+                                <property name="label">•</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="wrap">true</property>
+                                <property name="wrap-mode">word-char</property>
+                                <property name="xalign">0.0</property>
+                                <property name="label" translatable="yes">Make sure you have a Secret Service Provider installed, like gnome-keyring.</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="spacing">6</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="valign">start</property>
+                                <property name="label">•</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="wrap">true</property>
+                                <property name="wrap-mode">word-char</property>
+                                <property name="xalign">0.0</property>
+                                <property name="label" translatable="yes">Check that you have a default keyring and that it is unlocked.</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="wrap">true</property>
+                        <property name="wrap-mode">word-char</property>
+                        <property name="xalign">0.0</property>
+                        <property name="label" translatable="yes">Check the application logs and your distribution’s documentation for more details.</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

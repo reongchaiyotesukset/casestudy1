@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <menu id="scan_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Camera</attribute>
+        <attribute name="action">add.camera</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Screenshot</attribute>
+        <attribute name="action">add.screenshot</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_QR Code Image</attribute>
+        <attribute name="action">add.qrcode</attribute>
+      </item>
+    </section>
+  </menu>
+  <object class="GtkAdjustment" id="counter_adjustment">
+    <property name="upper">4294967295</property>
+    <property name="lower">0</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <template parent="AdwDialog" class="AccountAddDialog">
+    <property name="content-width">820</property>
+    <property name="content-height">760</property>
+    <property name="width-request">360</property>
+    <property name="height-request">294</property>
+    <property name="title" translatable="yes">Add a New Account</property>
+    <child>
+      <object class="AdwNavigationView" id="navigation_view">
+        <child>
+          <object class='GtkShortcutController'>
+            <property name='scope'>managed</property>
+            <child>
+              <object class='GtkShortcut'>
+                <property name='trigger'>Escape</property>
+                <property name='action'>action(add.previous)</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwNavigationPage">
+            <property name="tag">main</property>
+            <property name="title" translatable="yes">Add a New Account</property>
+            <property name="child">
+              <object class="AdwToolbarView">
+                <child type="top">
+                  <object class="AdwHeaderBar">
+                    <property name="show-end-title-buttons">False</property>
+                    <property name="show-start-title-buttons">False</property>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="label" translatable="yes">Cancel</property>
+                        <property name="action-name">window.close</property>
+                      </object>
+                    </child>
+                    <child type="end">
+                      <object class="GtkButton">
+                        <property name="label" translatable="yes">_Add</property>
+                        <property name="use-underline">True</property>
+                        <property name="sensitive">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="action-name">add.save</property>
+                        <style>
+                          <class name="suggested-action"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child type="end">
+                      <object class="GtkMenuButton" id="scan_btn">
+                        <property name="tooltip-text" translatable="yes">Scan QR Code</property>
+                        <property name="menu-model">scan_menu</property>
+                        <property name="icon-name">qrscanner-symbolic</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="hscrollbar-policy">never</property>
+                    <child>
+                      <object class="AdwClamp">
+                        <property name="margin-top">36</property>
+                        <property name="margin-bottom">12</property>
+                        <property name="vexpand">True</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="spacing">18</property>
+                            <property name="margin-start">12</property>
+                            <property name="margin-end">12</property>
+                            <child>
+                              <object class="ProviderImage" id="image">
+                                <property name="halign">center</property>
+                                <property name="size">96</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ErrorRevealer" id="error_revealer">
+                                <property name="margin-top">12</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkListBox">
+                                <property name="selection-mode">none</property>
+                                <child>
+                                  <object class="AdwActionRow">
+                                    <property name="activatable-widget">provider_entry</property>
+                                    <property name="title" translatable="yes">Provider</property>
+                                    <property name="subtitle" translatable="yes">Token issuer</property>
+                                    <child>
+                                      <object class="GtkEntry" id="provider_entry">
+                                        <property name="halign">end</property>
+                                        <property name="valign">center</property>
+                                        <property name="hexpand">True</property>
+                                        <property name="completion">provider_completion</property>
+                                        <property name="enable-emoji-completion">True</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwEntryRow" id="username_entry">
+                                    <property name="title" translatable="yes">Account</property>
+                                    <signal name="changed" handler="input_validate" swapped="true" />
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwPasswordEntryRow" id="token_entry">
+                                    <property name="title" translatable="yes">Token</property>
+                                    <signal name="changed" handler="input_validate" swapped="true" />
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwSpinRow" id="counter_spinbutton">
+                                    <property name="title" translatable="yes">Counter</property>
+                                    <property name="visible">False</property>
+                                    <property name="text">0</property>
+                                    <property name="adjustment">counter_adjustment</property>
+                                    <property name="numeric">True</property>
+                                  </object>
+                                </child>
+                                <style>
+                                  <class name="boxed-list"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkListBox" id="more_list">
+                                <property name="visible">False</property>
+                                <property name="selection-mode">none</property>
+                                <child>
+                                  <object class="AdwActionRow" id="algorithm_row">
+                                    <property name="title" translatable="yes">Algorithm</property>
+                                    <child>
+                                      <object class="GtkLabel" id="algorithm_label">
+                                        <property name="halign">end</property>
+                                        <property name="valign">center</property>
+                                        <property name="hexpand">True</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwActionRow" id="method_row">
+                                    <property name="title" translatable="yes">Computing Method</property>
+                                    <child>
+                                      <object class="GtkLabel" id="method_label">
+                                        <property name="halign">end</property>
+                                        <property name="valign">center</property>
+                                        <property name="hexpand">True</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwActionRow" id="period_row">
+                                    <property name="title" translatable="yes">Period</property>
+                                    <property name="subtitle" translatable="yes">Duration in seconds until the next password update</property>
+                                    <child>
+                                      <object class="GtkLabel" id="period_label">
+                                        <property name="halign">end</property>
+                                        <property name="valign">center</property>
+                                        <property name="hexpand">True</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwActionRow" id="digits_row">
+                                    <property name="title" translatable="yes">Digits</property>
+                                    <property name="subtitle" translatable="yes">Length of the generated code</property>
+                                    <child>
+                                      <object class="GtkLabel" id="digits_label">
+                                        <property name="halign">end</property>
+                                        <property name="valign">center</property>
+                                        <property name="hexpand">True</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="UrlRow" id="provider_website_row">
+                                    <property name="title" translatable="yes">Website</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="UrlRow" id="provider_help_row">
+                                    <property name="title" translatable="yes">How to Set Up</property>
+                                  </object>
+                                </child>
+                                <style>
+                                  <class name="boxed-list"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwNavigationPage">
+            <property name="title" translatable="yes">Camera</property>
+            <property name="tag">camera</property>
+            <property name="child">
+              <object class="Camera" id="camera">
+                <signal name="close" handler="camera_closed" swapped="true" />
+                <signal name="code-detected" handler="camera_code_detected" swapped="true" />
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwNavigationPage">
+            <property name="title" translatable="yes">Create Provider</property>
+            <property name="tag">create-provider</property>
+            <property name="child">
+              <object class="ProviderPage" id="provider_page">
+                <signal name="created" handler="provider_created" swapped="true" />
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+  <object class="GtkEntryCompletion" id="provider_completion">
+    <property name="minimum-key-length">1</property>
+    <property name="text-column">1</property>
+    <property name="inline-selection">True</property>
+    <signal name="match-selected" handler="match_selected" swapped="true" />
+    <signal name="no-matches" handler="no_matches_selected" swapped="true" />
+    <child>
+      <object class="GtkCellRendererText" />
+      <attributes>
+        <attribute name="text">1</attribute>
+      </attributes>
+    </child>
+  </object>
+</interface>

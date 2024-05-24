@@ -1,0 +1,41 @@
+.providers-list {
+  background-color: @theme_base_bg;
+}
+
+.provider-row {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.provider-row:hover {
+  background-color: @theme_base_bg;
+}
+
+.provider-row:active {
+  background: @theme_base_bg;
+  box-shadow: none;
+}
+
+camera toolbarview.extended headerbar button.back {
+  border-radius: 500px;
+}
+
+camera toolbarview.extended headerbar {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+camera .selectionbutton {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+camera {
+  background: black;
+  color: #f2f2f2;
+}
+
+camera popover contents,
+camera popover arrow {
+  background: alpha(#181818, .9);
+  color: white;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template parent="AdwActionRow" class="AccountRow">
+    <property name="activatable">True</property>
+    <property name="selectable">False</property>
+    <property name="use-markup">False</property>
+    <child type="suffix">
+      <object class="GtkLabel" id="otp_label">
+        <property name="halign">start</property>
+        <property name="valign">center</property>
+        <property name="selectable">True</property>
+        <style>
+          <class name="numeric" />
+        </style>
+      </object>
+    </child>
+    <child type="suffix">
+      <object class="GtkButton" id="increment_btn">
+        <property name="visible">False</property>
+        <property name="valign">center</property>
+        <property name="action-name">account.increment-counter</property>
+        <property name="icon-name">refresh-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Increment the counter</property>
+        <style>
+          <class name="flat" />
+        </style>
+      </object>
+    </child>
+    <child type="suffix">
+      <object class="GtkButton">
+        <property name="valign">center</property>
+        <property name="action-name">account.copy-otp</property>
+        <property name="icon-name">copy-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Copy PIN to clipboard</property>
+        <style>
+          <class name="flat" />
+        </style>
+      </object>
+    </child>
+    <child type="suffix">
+      <object class="GtkImage">
+        <property name="icon_name">go-next-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Account details</property>
+      </object>
+    </child>
+  </template>
+</interface>
