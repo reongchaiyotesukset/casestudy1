@@ -224,7 +224,7 @@ impl Window {
             .build(gio::Cancellable::NONE)
             .unwrap()
     }
-
+    //@@@ main
     pub fn set_view(&self, view: View) {
         let imp = self.imp();
         match view {
