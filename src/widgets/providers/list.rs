@@ -99,7 +99,7 @@ impl ProvidersList {
 
     pub fn refilter(&self) {
         let imp = self.imp();
-
+        // ลองแกะดู แต่ได้เฉพาะ gtk4 เท่านั้น
         if let Some(filter) = imp.filter_model.filter() {
             filter.changed(gtk::FilterChange::Different);
         }

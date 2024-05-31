@@ -68,12 +68,37 @@ mod imp {
 
             let preferences_action = gio::ActionEntry::builder("preferences")
                 .activate(|app: &Self::Type, _, _| {
+                // @@@@ reason use model on code? 
+                /* @@@@ when you'rs need use struct pub struct Application example model
+                        specify &app.imp() on line 
+                        
+                     type on app
+                      BorrowedObject {
+                                    phantom: PhantomData<&casestudy1::application::Application>,
+                        }
+
+                */
                     let model = &app.imp().model;
                     let window = app.active_window();
+                    //@@@glib::Object::builder().property("model", model).build()
+                    //โมเดลไม่ได้มาจาก widget 
+                    // PreferencesWindow เรียกใช้ new สามารถใช้ทุกๆ method ได้
                     let preferences = PreferencesWindow::new(model);
+                    //@@@ set_has_set_password มาจากไหน
+                    //can_be_locked value boolean
                     preferences.set_has_set_password(app.can_be_locked());
                     preferences.connect_restore_completed(clone!(@weak window =>move |_| {
+                    /* refilter working 
+                     b fn refilter(&self) {
+                        let imp = self.imp();
+
+                            if let Some(filter) = imp.filter_model.filter() {
+                            filter.changed(gtk::FilterChange::Different);
+                    }
+                        imp.sorter.changed(gtk::SorterChange::Different);
+                    */
                         window.providers().refilter();
+                        // Event Click restored button
                         window.imp().toast_overlay.add_toast(adw::Toast::new(&gettext("Accounts restored successfully")));
                     }));
                     preferences.connect_has_set_password_notify(clone!(@weak app => move |pref| {

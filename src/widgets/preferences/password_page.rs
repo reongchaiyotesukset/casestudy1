@@ -129,7 +129,7 @@ impl PasswordPage {
             imp.current_password_entry.disconnect(handler_id);
         }
     }
-
+   //สามารภเรียกวช้ actions ได้
     fn setup_actions(&self) {
         let actions = self.actions();
         let save_password = gio::ActionEntry::builder("save_password")
